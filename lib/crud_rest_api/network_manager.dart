@@ -1,8 +1,20 @@
 import 'dart:convert';
+import 'package:fic_flutter_model_rest_api/json_serialization/lesson/product_model.dart';
 import 'package:http/http.dart' as http;
 import 'album.dart';
 
 class NetworkManager {
+  Future<ProductModel> fetchProduct() async {
+    final response = await http
+        .get(Uri.parse('https://api.escuelajs.co/api/v1/products/24'));
+
+    if (response.statusCode == 200) {
+      return ProductModel.fromJson(response.body);
+    } else {
+      throw Exception('Failed to load product');
+    }
+  }
+
   Future<Album> fetchAlbum() async {
     final response = await http
         .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
